@@ -1,7 +1,6 @@
-### Fit-Paste.vm
+Fit-Paste.vm
 これはブロック選択時の選択行数に合わせてレジスタ内容を整形するVimプラグインです。
 
-## TODO:
--Replace/Addの実装
+TODO:
 -KeyMap登録部分の実装
 
