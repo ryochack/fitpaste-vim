@@ -25,7 +25,7 @@ endfunction
 function! fitpaste#FitPaste(key) range
 	" Escape when mode is not block visual
 	if '' !=# visualmode()
-		echo 'return'
+		"echo 'return'
 		return
 	endif
 
