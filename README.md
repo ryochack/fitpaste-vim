@@ -20,7 +20,7 @@ fitpaste-vimは無名レジスタの値を参照します。
 	structure.member2
 	structure.member3
 
-矩形選択モード(<C-v>)で*の部分を選択します。
+矩形選択モード(`<C-v>`)で*の部分を選択します。
 
 	*tructure.member0
 	*tructure.member1
