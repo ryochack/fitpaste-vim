@@ -1,6 +1,6 @@
 ## fitpaste-vim
 
-**fitpaste-vim**はVimの矩形選択モードでの一括挿入と同じ様に一括ペーストを可能にするVimプラグインです。
+**fitpaste-vim**はVimの矩形選択モードでの一括挿入と同じ様な、一括ペーストを可能にするVimプラグインです。
 
 ### Usage
 
@@ -20,7 +20,7 @@ fitpaste-vimは無名レジスタの値を参照します。
 	structure.member2
 	structure.member3
 
-矩形選択モードで*の部分を選択します。
+矩形選択モード(<C-v>)で*の部分を選択します。
 
 	*tructure.member0
 	*tructure.member1
@@ -53,15 +53,15 @@ fitpaste-vimは無名レジスタの値を参照します。
 
 レジスタ値に以下２行の値が入っているとき
 
-	_register1_ 
-	_register2_ 
+	_register1_
+	_register2_
 
 先ほどの選択範囲では`<Plug>(fitpaste-insert)`で以下のように展開されます。
 
 	_register1_structure.member0
 	_register2_structure.member1
 	_register1_structure.member2
-	_register2_structure.member3	
+	_register2_structure.member3
 
 <br>
 ### License

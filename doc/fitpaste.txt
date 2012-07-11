@@ -1,0 +1,54 @@
+*fitpaste.txt*    Fit & Paste register on blockwise selection mode.
+
+" File       : fitpaste.vim
+" Author     : ryochack <ryochack@gmail.com>
+" Last Change: 11-Jul-2012.
+" Version    : 0.3
+" License    : The MIT License
+" WebPage    : http://github.com/ryochack/fitpaste-vim
+
+==============================================================================
+CONTENTS                                    *fitpaste-contents*
+
+Introduction                                |fitpaste-introduction|
+Mapping                                     |fitpaste-mapping|
+CONFIGURATION EXAMPLE                       |fitpaste-examples|
+
+==============================================================================
+INTRODUCTION                                *fitpaste-introduction*
+
+*fitpaste* is a Vim plugin to paste on every blockwise selection.
+Before pasting, fit register to the blockwise selection.
+Then paste fitted register.
+
+==============================================================================
+MAPPING                                     *fitpaste-mapping*
+
+CTRL-V <Plug>(fitpaste-insert)
+
+    insert register fitted blockwise selection to forward.
+
+CTRL-V <Plug>(fitpaste-append)
+
+    append register fitted blockwise selection to backward.
+
+CTRL-V <Plug>(fitpaste-replace)
+
+    replace blockwise selection by register.
+
+==============================================================================
+CONFIGURATION EXAMPLE                       *fitpaste-examples*
+
+Default keymapping is defined below.
+
+    vmap <Leader>i <Plug>(fitpaste-insert)
+    vmap <Leader>a <Plug>(fitpaste-append)
+    vmap <Leader>p <Plug>(fitpaste-replace)
+
+If you want to change keymapping, write new keymaping in your '.vimrc'.
+For example)
+
+    vmap fi <Plug>(fitpaste-insert)
+    vmap fa <Plug>(fitpaste-append)
+    vmap fp <Plug>(fitpaste-replace)
+

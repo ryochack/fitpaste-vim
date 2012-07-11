@@ -1,11 +1,11 @@
 "=============================================================================
-" File: fitpaste.vim
-" Author: Ryosuke Tamura
-" Email: ryochack@gmail.com
+" File       : fitpaste.vim
+" Author     : ryochack <ryochack@gmail.com>
 " Last Change: 11-Jul-2012.
-" Version: 0.3a
-" License: The MIT License
-" WebPage: http://github.com/ryochack/fitpaste-vim
+" Version    : 0.3
+" License    : The MIT License
+" WebPage    : http://github.com/ryochack/fitpaste-vim
+"-----------------------------------------------------------------------------
 
 let s:save_cpo = &cpo
 set cpo&vim
