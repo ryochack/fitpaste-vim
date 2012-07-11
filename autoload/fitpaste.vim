@@ -2,10 +2,10 @@
 " File: fitpaste.vim
 " Author: Ryosuke Tamura
 " Email: ryochack@gmail.com
-" Last Change: 09-Jul-2012.
-" Version: 0.2a
+" Last Change: 11-Jul-2012.
+" Version: 0.3a
 " License: The MIT License
-" WebPage: http://github.com/ryochack/fit-paste.vim
+" WebPage: http://github.com/ryochack/fitpaste-vim
 
 let s:save_cpo = &cpo
 set cpo&vim
@@ -22,24 +22,31 @@ function! s:fit_register_to_selectline(reg, vlnum)
 	return fitlist
 endfunction
 
-function! fitpaste#FitPaste(key) range
+function! fitpaste#FitPaste(range_given, line1, line2, type)
 	" Escape when mode is not block visual
 	if '' !=# visualmode()
-		"echo 'return'
+		return
+	endif
+	" Escape when select no line
+	if a:range_given == 0
 		return
 	endif
 
-	let selectlnum = a:lastline-a:firstline+1
+	let selectlnum = a:line2-a:line1+1
 	let regname = ''
+	" Save Register
 	let regsave = getreg(regname)
 	let fitlist = s:fit_register_to_selectline(regsave, selectlnum)
 	call setreg(regname, join(fitlist, "\n"), 'b')
 	normal! gv
 	let vpos = getpos('v')
 	let cpos = getpos('.')
-	if (a:key[strlen(a:key)-1]) ==? 'r'
+
+	" Replace Action
+	if a:type ==? 'r'
 		normal! p
-	elseif (a:key[strlen(a:key)-1]) ==? 'i'
+	" Insert Action
+	elseif a:type ==? 'i'
 		if (vpos[1] < cpos[1])
 			" lnum
 			let cpos[1] = vpos[1]
@@ -51,7 +58,8 @@ function! fitpaste#FitPaste(key) range
 		call setpos('.', cpos)
 		execute "normal! \<ESC>"
 		normal! P
-	elseif (a:key[strlen(a:key)-1]) ==? 'a'
+	" Append Action
+	elseif a:type ==? 'a'
 		if (vpos[1] < cpos[1])
 			" lnum
 			let cpos[1] = vpos[1]
@@ -66,8 +74,10 @@ function! fitpaste#FitPaste(key) range
 	else
 		echoerr "FitPaste received undefined key!"
 	endif
+	" Restore Register
 	call setreg(regname, regsave)
 endfunction
+
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
