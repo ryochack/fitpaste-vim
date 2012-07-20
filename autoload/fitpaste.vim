@@ -1,8 +1,8 @@
 "=============================================================================
 " File       : fitpaste.vim
 " Author     : ryochack <ryochack@gmail.com>
-" Last Change: 11-Jul-2012.
-" Version    : 0.3
+" Last Change: 21-Jul-2012.
+" Version    : 0.3.1
 " License    : The MIT License
 " WebPage    : http://github.com/ryochack/fitpaste-vim
 "-----------------------------------------------------------------------------
@@ -39,36 +39,28 @@ function! fitpaste#FitPaste(range_given, line1, line2, type)
 	let fitlist = s:fit_register_to_selectline(regsave, selectlnum)
 	call setreg(regname, join(fitlist, "\n"), 'b')
 	normal! gv
-	let vpos = getpos('v')
-	let cpos = getpos('.')
 
 	" Replace Action
 	if a:type ==? 'r'
 		normal! p
 	" Insert Action
 	elseif a:type ==? 'i'
-		if (vpos[1] < cpos[1])
-			" lnum
-			let cpos[1] = vpos[1]
-		endif
-		if (vpos[2] < cpos[2])
-			" col
-			let cpos[2] = vpos[2]
-		endif
-		call setpos('.', cpos)
+		let vpos = getpos('v')
+		let cpos = getpos('.')
+		let ccol = cpos[2] + cpos[3]
+		let mincol = vpos[2] < ccol ? vpos[2] : ccol
+		let cmd = mincol == 1 ? 'P' : 'p'
+		normal! I
 		execute "normal! \<ESC>"
-		normal! P
+		execute "normal! ".cmd
 	" Append Action
 	elseif a:type ==? 'a'
-		if (vpos[1] < cpos[1])
-			" lnum
-			let cpos[1] = vpos[1]
-		endif
-		if (vpos[2] > cpos[2])
-			" col
-			let cpos[2] = vpos[2]
-		endif
-		call setpos('.', cpos)
+		let vpos = getpos('v')
+		let cpos = getpos('.')
+		let ccol = cpos[2] + cpos[3]
+		let maxcol = vpos[2] > ccol ? vpos[2] : ccol
+		let cmd = maxcol == 1 ? 'I' : 'A'
+		execute "normal! ".cmd
 		execute "normal! \<ESC>"
 		normal! p
 	else

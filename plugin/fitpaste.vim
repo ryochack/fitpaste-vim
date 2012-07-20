@@ -1,8 +1,8 @@
 "=============================================================================
 " File       : fitpaste.vim
 " Author     : ryochack <ryochack@gmail.com>
-" Last Change: 11-Jul-2012.
-" Version    : 0.3
+" Last Change: 21-Jul-2012.
+" Version    : 0.3.1
 " License    : The MIT License
 " WebPage    : http://github.com/ryochack/fitpaste-vim
 "-----------------------------------------------------------------------------
