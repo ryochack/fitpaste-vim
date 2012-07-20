@@ -39,15 +39,15 @@ function! fitpaste#FitPaste(range_given, line1, line2, type)
 	let fitlist = s:fit_register_to_selectline(regsave, selectlnum)
 	call setreg(regname, join(fitlist, "\n"), 'b')
 	normal! gv
+	let vpos = getpos('v')
+	let cpos = getpos('.')
+	let ccol = cpos[2] + cpos[3]
 
 	" Replace Action
 	if a:type ==? 'r'
 		normal! p
 	" Insert Action
 	elseif a:type ==? 'i'
-		let vpos = getpos('v')
-		let cpos = getpos('.')
-		let ccol = cpos[2] + cpos[3]
 		let mincol = vpos[2] < ccol ? vpos[2] : ccol
 		let cmd = mincol == 1 ? 'P' : 'p'
 		normal! I
@@ -55,9 +55,6 @@ function! fitpaste#FitPaste(range_given, line1, line2, type)
 		execute "normal! ".cmd
 	" Append Action
 	elseif a:type ==? 'a'
-		let vpos = getpos('v')
-		let cpos = getpos('.')
-		let ccol = cpos[2] + cpos[3]
 		let maxcol = vpos[2] > ccol ? vpos[2] : ccol
 		let cmd = maxcol == 1 ? 'I' : 'A'
 		execute "normal! ".cmd
