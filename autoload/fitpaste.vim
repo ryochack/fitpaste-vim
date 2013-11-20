@@ -23,21 +23,26 @@ function! s:fit_register_to_selectline(reg, vlnum)
 endfunction
 
 function! fitpaste#FitPaste(range_given, line1, line2, type)
-	" Escape when mode is not block visual
-	if '' !=# visualmode()
-		return
-	endif
 	" Escape when select no line
 	if a:range_given == 0
 		return
 	endif
 
+	" Escape when 'V'mode and 'v'mode selected several lines
 	let selectlnum = a:line2-a:line1+1
+	let vmode = visualmode()
+	if vmode ==# 'V'
+		return
+	elseif vmode ==# 'v' && selectlnum > 1
+		return
+	endif
+
 	let regname = ''
 	" Save Register
 	let regsave = getreg(regname)
 	let fitlist = s:fit_register_to_selectline(regsave, selectlnum)
 	call setreg(regname, join(fitlist, "\n"), 'b')
+
 	normal! gv
 	let vpos = getpos('v')
 	let cpos = getpos('.')
@@ -48,11 +53,12 @@ function! fitpaste#FitPaste(range_given, line1, line2, type)
 		normal! p
 	" Insert Action
 	elseif a:type ==? 'i'
-		let mincol = vpos[2] < ccol ? vpos[2] : ccol
-		let cmd = mincol == 1 ? 'P' : 'p'
-		normal! I
+		let minline = a:line1
+		let mincol  = vpos[2] < ccol ? vpos[2] : ccol
+		let leftpos = [vpos[0], minline, mincol, 0]
 		execute "normal! \<ESC>"
-		execute "normal! ".cmd
+		call setpos('.', leftpos)
+		normal! P
 	" Append Action
 	elseif a:type ==? 'a'
 		let maxcol = vpos[2] > ccol ? vpos[2] : ccol
@@ -63,6 +69,7 @@ function! fitpaste#FitPaste(range_given, line1, line2, type)
 	else
 		echoerr "FitPaste received undefined key!"
 	endif
+
 	" Restore Register
 	call setreg(regname, regsave)
 endfunction
